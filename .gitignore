@@ -1,0 +1,7 @@
+.pytest_cache
+.idea
+data
+witch.egg-info
+__pycache__
+tost/__pycache__/
+tost/models/__pycache__/
