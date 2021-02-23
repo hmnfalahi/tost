@@ -3,6 +3,8 @@ from os.path import dirname
 from nanohttp import settings
 from restfulpy import Application
 
+from .controllers.root import Root
+
 
 __version__ = '0.1'
 
@@ -15,12 +17,12 @@ class Tost(Application):
         administrative_url: postgresql://postgres:postgres@localhost/postgres
    '''
 
-    def __init__(self, application_name='tost', root=None):
+    def __init__(self, application_name='tost', root=Root()):
         super().__init__(
             application_name,
             root=root,
             root_path=dirname(__file__),
-            version=__version__
+            version=__version__,
         )
 
     @classmethod

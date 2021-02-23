@@ -1,9 +1,11 @@
 from restfulpy.controllers import RootController, RestController, \
     JSONPatchControllerMixin
 
+from .member import MemberController
+
 
 class Apiv1(RestController, JSONPatchControllerMixin):
-    pass
+    members = MemberController()
 
 
 class Root(RootController):
