@@ -79,3 +79,14 @@ class MemberController(ModelRestController):
         members = DBSession.query(Member)
         return members
 
+    @json
+    @commit
+    def delete(self, id):
+        id = int_or_notfound(id)
+        member = DBSession.query(Member).get(id)
+        if member is None:
+            raise HTTPNotFound()
+
+        DBSession.delete(member)
+        return member
+
