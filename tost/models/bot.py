@@ -11,9 +11,17 @@ class Bot(DeclarativeBase):
     name = Column(String)
     title = Column(String)
     owner_id = Column(Integer, ForeignKey('member.id', ondelete="CASCADE"))
+
     owner = relationship(
         'Member',
         back_populates='bots',
+        cascade="all, delete",
+    )
+
+    event = relationship(
+        'Event',
+        back_populates='bot',
+        uselist=False,
         cascade="all, delete",
     )
 

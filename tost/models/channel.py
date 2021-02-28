@@ -37,10 +37,18 @@ class Channel(DeclarativeBase):
     name = Column(String)
     title = Column(String)
     owner_id = Column(Integer, ForeignKey('member.id', ondelete="CASCADE"))
+
     admins = relationship(
         'Member',
         secondary='channel_admin',
         back_populates='channels',
+        cascade="all, delete",
+    )
+
+    event = relationship(
+        'Event',
+        back_populates='channel',
+        uselist=False,
         cascade="all, delete",
     )
 
