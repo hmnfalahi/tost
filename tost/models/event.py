@@ -31,4 +31,3 @@ class Event(DeclarativeBase):
     def owner(self):
         return self.bot or self.channel
 
-
