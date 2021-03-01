@@ -17,30 +17,36 @@ def test_event(db):
         title='channel1',
     )
     session.add(channel)
+    event1 = Event(
+        title='event1',
+        description='event1',
+    )
+    session.add(event1)
+
+    event2 = Event(
+        title='event2',
+        description='event2',
+    )
+    session.add(event2)
     session.commit()
 
-    bot_event = Event(
-        title='bot_event',
-        description='bot_event',
-        bot=bot,
-    )
-    session.add(bot_event)
+    # Test Bot Event
+    assert event1.id is not None
+    assert event1.owner == None
+    assert bot.event == None
 
-    channel_event = Event(
-        title='channel_event',
-        description='channel_event',
-    )
-    session.add(channel_event)
-    session.commit()
+    bot.event = event1
+    assert bot.event == event1
+    assert event1.owner == bot
+    assert event1.id == bot.event.id
 
-    channel.event = channel_event
+    # Test channel event
+    assert event2.id is not None
+    assert channel.event is None
+    assert event2.owner is None
 
-    assert bot_event.id is not None
-    assert bot_event.owner == bot
-    assert bot_event.id == bot.event.id
-    assert bot_event == bot.event
-    assert channel_event.id is not None
-    assert channel_event.owner == channel
-    assert channel_event.id == channel.event.id
-    assert channel.event == channel_event
+    channel.event = event2
+    assert event2.owner == channel
+    assert event2.id == channel.event.id
+    assert channel.event == event2
 
