@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, String
+from sqlalchemy import Integer, ForeignKey, String
 from sqlalchemy.orm import relationship
 from restfulpy.orm import DeclarativeBase, Field, OrderingMixin, \
     FilteringMixin, PaginationMixin
@@ -30,7 +30,8 @@ class ChannelAdmin(DeclarativeBase):
     )
 
 
-class Channel(DeclarativeBase):
+class Channel(DeclarativeBase, OrderingMixin,
+              FilteringMixin, PaginationMixin):
     __tablename__ = 'channel'
 
     id = Field(

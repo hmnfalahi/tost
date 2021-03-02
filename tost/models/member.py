@@ -1,14 +1,13 @@
 import os
-import uuid
 from datetime import date, datetime
 from hashlib import sha256
 
-from restfulpy.principal import JWTRefreshToken, JWTPrincipal
 from sqlalchemy import String, Enum, Date, Integer, select, func, \
     extract, Unicode
 from sqlalchemy.orm import column_property, relationship, synonym
 from restfulpy.orm import DeclarativeBase, Field, OrderingMixin, \
     FilteringMixin, PaginationMixin
+
 
 MEMBER_GENDER = [
     'male',

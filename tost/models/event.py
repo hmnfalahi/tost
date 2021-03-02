@@ -81,6 +81,7 @@ class Event(DeclarativeBase, OrderingMixin, FilteringMixin, PaginationMixin):
         not_none=False,
         readonly=True,
     )
+
     creator = relationship(
         'Member',
         back_populates='events',

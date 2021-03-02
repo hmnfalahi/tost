@@ -4,7 +4,8 @@ from restfulpy.orm import DeclarativeBase, Field, OrderingMixin, \
     FilteringMixin, PaginationMixin
 
 
-class Bot(DeclarativeBase, OrderingMixin, FilteringMixin, PaginationMixin):
+class Bot(DeclarativeBase, OrderingMixin,
+          FilteringMixin, PaginationMixin):
     __tablename__ = 'bot'
 
     id = Field(
