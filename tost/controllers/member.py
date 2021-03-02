@@ -32,6 +32,10 @@ class MemberController(ModelRestController):
             not_none=StatusEmailIsNull,
             pattern=(MEMBER_EMAIL_PATTERN, StatusInvalidEmailFormat),
         ),
+        gender=dict(
+            required=StatusGenderIsRequired,
+            not_none=StatusGenderIsNull,
+        ),
         firstName=dict(
             not_none=StatusFirstnameIsNull,
         ),
