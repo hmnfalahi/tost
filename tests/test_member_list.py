@@ -1,3 +1,5 @@
+from datetime import date
+
 from bddrest import status, response, when
 
 from tost.models.member import Member
@@ -11,29 +13,35 @@ class TestMember(LocalApplicationTestCase):
         session = cls.create_session()
 
         member1 = Member(
-            email='hmn1@gmail.com',
-            user_name='hmn1',
-            first_name='hmn',
-            last_name='falahi',
-            password='ABc123123',
+            first_name='ali1',
+            last_name='ahmadi1',
+            user_name='aliahmadi1',
+            email='ali1@gmail.com',
+            gender='male',
+            password='Abcd1234',
+            birth_date=date(2000, 4, 9),
         )
         session.add(member1)
 
         member2 = Member(
-            email='hmn2@gmail.com',
-            user_name='hmn2',
-            first_name='hmn',
-            last_name='falahi',
-            password='ABc123123',
+            first_name='ali2',
+            last_name='ahmadi2',
+            user_name='aliahmadi2',
+            email='ali2@gmail.com',
+            gender='male',
+            password='Abcd1234',
+            birth_date=date(2000, 4, 9),
         )
         session.add(member2)
 
         member3 = Member(
-            email='hmn3@gmail.com',
-            user_name='hmn3',
-            first_name='hmn',
-            last_name='falahi',
-            password='ABc123123',
+            first_name='ali3',
+            last_name='ahmadi3',
+            user_name='aliahmadi3',
+            email='ali3@gmail.com',
+            gender='male',
+            password='Abcd1234',
+            birth_date=date(2000, 4, 9),
         )
         session.add(member3)
         session.commit()
@@ -58,5 +66,5 @@ class TestMember(LocalApplicationTestCase):
 
             when('Sorting the response descending', query=dict(sort='-id'))
             assert len(response.json) == 3
-            assert response.json[0]['id'] < response.json[1]['id']
+            assert response.json[0]['id'] > response.json[1]['id']
 

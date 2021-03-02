@@ -1,3 +1,5 @@
+from datetime import date
+
 from bddrest import status, when, given, response
 
 from tost.models.member import Member
@@ -11,20 +13,24 @@ class TestMember(LocalApplicationTestCase):
         session = cls.create_session()
 
         cls.member1 = Member(
-            user_name='member1',
-            email='member1@mail.com',
-            first_name='member1',
-            last_name='falahi',
-            password='Abc123123',
+            first_name='ali1',
+            last_name='ahmadi1',
+            user_name='aliahmadi1',
+            email='ali1@gmail.com',
+            gender='male',
+            password='Abcd1234',
+            birth_date=date(2000, 4, 9),
         )
         session.add(cls.member1)
 
         cls.member2 = Member(
-            user_name='member2',
-            email='member2@mail.com',
-            first_name='member2',
-            last_name='falahi',
-            password='Abc123123',
+            first_name='ali2',
+            last_name='ahmadi2',
+            user_name='aliahmadi2',
+            email='ali2@gmail.com',
+            gender='male',
+            password='Abcd1234',
+            birth_date=date(2000, 4, 9),
         )
         session.add(cls.member2)
         session.commit()

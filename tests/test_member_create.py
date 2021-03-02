@@ -10,6 +10,7 @@ class TestMember(LocalApplicationTestCase):
         email = 'hmnfalahi@mail.co'
         first_name = 'hmn'
         last_name = 'falahi'
+        gender = 'male'
         birth_date = '1999-08-07'
         password = 'Hhmnfalahi9964'
 
@@ -20,6 +21,7 @@ class TestMember(LocalApplicationTestCase):
                 json=dict(
                     userName=user_name,
                     email=email,
+                    gender=gender,
                     firstName=first_name,
                     lastName=last_name,
                     birthDate=birth_date,
@@ -30,6 +32,7 @@ class TestMember(LocalApplicationTestCase):
             assert response.json['id'] is not None
             assert response.json['userName'] == user_name
             assert response.json['email'] == email
+            assert response.json['gender'] == gender
             assert response.json['firstName'] == first_name
             assert response.json['lastName'] == last_name
             assert response.json['birthDate'] == birth_date
@@ -65,6 +68,18 @@ class TestMember(LocalApplicationTestCase):
             )
             assert status == '400 Username Length Must Be Greater Than 5 ' \
                 'Characters and Less than 20 Character'
+
+            when(
+                'Trying to pass greater than 20 character',
+                json=given - 'gender',
+            )
+            assert status == '400 Gender is required'
+
+            when(
+                'Trying to pass greater than 20 character',
+                json=given | dict(gender=None),
+            )
+            assert status == '400 Gender is null'
 
             when(
                 'Trying to pass null firstname',
