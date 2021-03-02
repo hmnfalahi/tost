@@ -9,9 +9,12 @@ def test_age(db):
     session = db()
 
     member = Member(
-        user_name='ali',
+        first_name='ali',
+        last_name='ahmadi',
+        user_name='aliahmadi',
         email='ali@gmail.com',
-        password='ahmadi',
+        gender='male',
+        password='Abcd1234',
         birth_date=date(2000, 4, 9),
     )
     session.add(member)
