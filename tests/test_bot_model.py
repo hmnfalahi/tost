@@ -1,3 +1,5 @@
+from datetime import date
+
 from restfulpy.testing import db
 
 from tost.models import Bot
@@ -8,11 +10,13 @@ def test_create(db):
     session = db()
 
     member = Member(
-        first_name='ali1',
-        email='ali1@gmail.com',
+        first_name='ali',
         last_name='ahmadi',
-        user_name='ali',
-        password='9964',
+        user_name='aliahmadi',
+        email='ali@gmail.com',
+        gender='male',
+        password='Abcd1234',
+        birth_date=date(2000, 4, 9),
     )
     session.add(member)
     session.commit()
