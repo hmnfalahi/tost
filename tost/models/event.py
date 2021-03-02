@@ -29,7 +29,7 @@ class Event(DeclarativeBase):
     creator = relationship(
         'Member',
         back_populates='events',
-        uselist='False',
+        uselist=False,
         cascade='all, delete',
     )
     bot = relationship(
