@@ -128,3 +128,29 @@ class Member(DeclarativeBase, OrderingMixin, FilteringMixin, PaginationMixin):
     fullname = column_property(first_name + ' ' + last_name)
     age = column_property(date.today().year - extract('year', birth_date))
 
+    def _hash_password(cls, password):
+        salt = sha256()
+        salt.update(os.urandom(60))
+        salt = salt.hexdigest()
+
+        hashed_pass = sha256()
+        hashed_pass.update((password + salt).encode('utf-8'))
+        hashed_pass = hashed_pass.hexdigest()
+
+        password = salt + hashed_pass
+        return password
+
+    def _set_password(self, password):
+        """Hash ``password`` on the fly and store its hashed version."""
+        self._password = self._hash_password(password)
+
+    def _get_password(self):
+        """Return the hashed version of the password."""
+        return self._password
+
+    password = synonym(
+        '_password',
+        descriptor=property(_get_password, _set_password),
+        info=dict(protected=True)
+    )
+
