@@ -1,31 +1,86 @@
-from sqlalchemy import Column, Integer, ForeignKey, String, Enum
+from sqlalchemy import Integer, ForeignKey, String, Enum
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 from restfulpy.orm import DeclarativeBase, Field, OrderingMixin, \
     FilteringMixin, PaginationMixin
 
 
-statuses = [
+STATUSES = [
     'draft',
     'published',
     'expired',
 ]
 
 
-class Event(DeclarativeBase):
+class Event(DeclarativeBase, OrderingMixin, FilteringMixin, PaginationMixin):
     __tablename__ = 'event'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String, unique=True)
-    status = Column(
-        Enum(*statuses, name='statuses'),
-        nullable=False,
+    id = Field(
+        Integer,
+        primary_key=True,
+        unique=True,
+        required=True,
+        not_none=True,
+        readonly=True,
+        label='ID',
+        minimum=1,
     )
-    description = Column(String)
-    bot_id = Column(Integer, ForeignKey('bot.id', ondelete='CASCADE'))
-    channel_id = Column(Integer, ForeignKey('channel.id', ondelete='CASCADE'))
-    creator_id = Column(Integer, ForeignKey('member.id', onupdate='CASCADE'))
-
+    title = Field(
+        String(50),
+        unique=True,
+        required=True,
+        not_none=True,
+        readonly=False,
+        label='Title',
+        example='EventTitle',
+    )
+    status = Field(
+        Enum(*STATUSES, name='statuses'),
+        python_type=str,
+        not_none=True,
+        required=True,
+        readonly=False,
+        label='status',
+        watermark='Choose Event Status',
+        example='draft',
+    )
+    description = Field(
+        String(50),
+        unique=False,
+        required=False,
+        not_none=False,
+        readonly=False,
+        label='Description',
+        example='event description',
+    )
+    bot_id = Field(
+        Integer, ForeignKey('bot.id'),
+        python_type=int,
+        watermark='Choose an bot',
+        label='Bot Id',
+        nullable=True,
+        not_none=False,
+        readonly=True,
+    )
+    channel_id = Field(
+        Integer, ForeignKey('channel.id'),
+        python_type=int,
+        watermark='Choose an channel',
+        label='Channel Id',
+        nullable=True,
+        not_none=False,
+        readonly=True,
+    )
+    creator_id = Field(
+        Integer, ForeignKey('member.id'),
+        python_type=int,
+        watermark='Choose an Member',
+        label='Member Id',
+        required=True,
+        nullable=False,
+        not_none=False,
+        readonly=True,
+    )
     creator = relationship(
         'Member',
         back_populates='events',

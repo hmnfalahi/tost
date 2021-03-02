@@ -1,3 +1,5 @@
+from datetime import date
+
 from tost.models import Bot, Channel, Event, Member
 
 from restfulpy.testing import db
@@ -6,22 +8,28 @@ from restfulpy.testing import db
 def test_event(db):
     session = db()
     member = Member(
-        user_name='member1',
-        first_name='member',
-        last_name='1',
-        email='member1@mail.com',
+        first_name='ali',
+        last_name='ahmadi',
+        user_name='aliahmadi',
+        email='ali@gmail.com',
+        gender='male',
         password='Abcd1234',
+        birth_date=date(2000, 4, 9),
     )
+    session.add(member)
+    session.flush()
 
     bot = Bot(
         name='bot1',
         title='bot1',
+        owner_id=member.id,
     )
     session.add(bot)
 
     channel = Channel(
         name='channel1',
         title='channel1',
+        owner_id=member.id,
     )
     session.add(channel)
     event1 = Event(
@@ -36,6 +44,7 @@ def test_event(db):
         title='event2',
         status='draft',
         description='event2',
+        creator=member,
     )
     session.add(event2)
     session.commit()
@@ -62,10 +71,6 @@ def test_event(db):
 
     # Test event creator
     assert event1.creator_id == member.id
-    assert event2.creator is None
-
-    member.events.append(event2)
-    assert event2.creator is not None
     assert event2.creator == member
     assert [event1, event2] == member.events
 
