@@ -90,3 +90,55 @@ class MemberController(ModelRestController):
         DBSession.delete(member)
         return member
 
+    @json
+    @validate(
+        userName=dict(
+            type_=(str, StatusInvalidStringType),
+            min_length=(5, StatusUsernameLengthInvalid),
+            max_length=(20, StatusUsernameLengthInvalid),
+            required=StatusUsernameIsRequired,
+            not_none=StatusUsernameIsNull,
+        ),
+        email=dict(
+            not_none=StatusEmailIsNull,
+            pattern=(MEMBER_EMAIL_PATTERN, StatusInvalidEmailFormat),
+        ),
+        firstName=dict(
+            not_none=StatusFirstnameIsNull,
+        ),
+        lastName=dict(
+            not_none=StatusLastnameIsNull,
+        ),
+    )
+    @commit
+    def update(self, id):
+        id = int_or_notfound(id)
+        user_name = context.form.get('userName')
+        email = context.form.get('email')
+
+        member = DBSession.query(Member) \
+            .filter(Member.id == id) \
+            .one_or_none()
+
+        if member is None:
+            raise HTTPNotFound()
+
+        username_exists = DBSession.query(Member) \
+            .filter(Member.user_name == user_name) \
+            .filter(Member.id != id) \
+            .one_or_none()
+
+        if username_exists:
+            raise StatusRepetitiveUsername()
+
+        email_exist = DBSession.query(Member) \
+            .filter(Member.email == email) \
+            .filter(Member.id != id) \
+            .one_or_none()
+
+        if email_exist:
+            raise StatusRepetitiveEmail()
+
+        member.update_from_request()
+        return member
+
