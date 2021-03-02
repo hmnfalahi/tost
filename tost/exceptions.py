@@ -61,3 +61,26 @@ class StatusRepetitiveUsername(HTTPKnownStatus):
 class StatusRepetitiveEmail(HTTPKnownStatus):
     status = '400 email address is already exist'
 
+
+class StatusRepetitiveTitle(HTTPKnownStatus):
+    status = '400 Title is already exist'
+
+
+class StatusTitleIsRequired(HTTPKnownStatus):
+    status = '400 Title is required'
+
+
+class StatusTitleIsNull(HTTPKnownStatus):
+    status = '400 Title is null'
+
+
+class StatusStatusIsRequired(HTTPKnownStatus):
+    status = '400 Status is required'
+
+
+class StatusStatusIsNull(HTTPKnownStatus):
+    status = '400 Status is null'
+
+
+class StatusDescriptionIsNull(HTTPKnownStatus):
+    status = '400 Description is null'
