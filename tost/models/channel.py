@@ -7,15 +7,15 @@ from restfulpy.orm import DeclarativeBase, Field, OrderingMixin, \
 class ChannelAdmin(DeclarativeBase):
     __tablename__ = 'channel_admin'
 
-    channel_id = Column(
+    channel_id = Field(
         Integer,
-        ForeignKey('channel.id', ondelete="CASCADE"),
-        primary_key=True,
+        ForeignKey('channel.id'),
+        primary_key=True
     )
-    admin_id = Column(
+    admin_id = Field(
         Integer,
-        ForeignKey('member.id', ondelete="CASCADE"),
-        primary_key=True,
+        ForeignKey('member.id'),
+        primary_key=True
     )
 
     channel = relationship(
@@ -33,10 +33,44 @@ class ChannelAdmin(DeclarativeBase):
 class Channel(DeclarativeBase):
     __tablename__ = 'channel'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String)
-    title = Column(String)
-    owner_id = Column(Integer, ForeignKey('member.id', ondelete="CASCADE"))
+    id = Field(
+        Integer,
+        primary_key=True,
+        unique=True,
+        required=True,
+        not_none=True,
+        readonly=True,
+        label='ID',
+        minimum=1,
+    )
+    name = Field(
+        String(50),
+        unique=True,
+        required=True,
+        not_none=True,
+        readonly=False,
+        label='Name',
+        example='AliBot',
+    )
+    title = Field(
+        String(50),
+        unique=False,
+        required=False,
+        not_none=True,
+        readonly=False,
+        label='Title',
+        example='AliBot',
+    )
+    owner_id = Field(
+        Integer,
+        ForeignKey('member.id'),
+        python_type=int,
+        watermark='Choose an owner',
+        label='Owner Id',
+        nullable=False,
+        not_none=True,
+        readonly=True,
+    )
 
     admins = relationship(
         'Member',

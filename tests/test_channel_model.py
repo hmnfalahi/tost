@@ -1,3 +1,5 @@
+from datetime import date
+
 from restfulpy.testing import db
 
 from tost.models import Channel
@@ -8,20 +10,24 @@ def test_create(db):
     session = db()
     member = Member(
         first_name='ali1',
+        last_name='ahmadi1',
+        user_name='aliahmadi1',
         email='ali1@gmail.com',
-        last_name='ahmadi',
-        user_name='ali',
-        password='9964',
+        gender='male',
+        password='Abcd1234',
+        birth_date=date(2000, 4, 9),
     )
     session.add(member)
     session.commit()
 
     member2 = Member(
         first_name='ali2',
+        last_name='ahmadi2',
+        user_name='aliahmadi2',
         email='ali2@gmail.com',
-        last_name='ahmadi',
-        user_name='ali2',
-        password='9964',
+        gender='male',
+        password='Abcd1234',
+        birth_date=date(2000, 4, 9),
     )
     session.add(member2)
 
@@ -36,14 +42,17 @@ def test_create(db):
 
     member3 = Member(
         first_name='ali3',
+        last_name='ahmadi3',
+        user_name='aliahmadi3',
         email='ali3@gmail.com',
-        last_name='ahmadi',
-        user_name='ali3',
-        password='9964',
-        channels=[channel],
+        gender='male',
+        password='Abcd1234',
+        birth_date=date(2000, 4, 9),
     )
     session.add(member3)
     session.commit()
+
+    channel.admins.append(member3)
 
     assert channel.id is not None
     assert channel.name == 'channel1'
