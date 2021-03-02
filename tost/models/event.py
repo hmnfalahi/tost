@@ -20,23 +20,29 @@ class Event(DeclarativeBase):
     status = Column(
         Enum(*statuses, name='statuses'),
         nullable=False,
-        required=True
     )
     description = Column(String)
-    bot_id = Column(Integer, ForeignKey('bot.id', ondelete="CASCADE"))
-    channel_id = Column(Integer, ForeignKey('channel.id', ondelete="CASCADE"))
+    bot_id = Column(Integer, ForeignKey('bot.id', ondelete='CASCADE'))
+    channel_id = Column(Integer, ForeignKey('channel.id', ondelete='CASCADE'))
+    creator_id = Column(Integer, ForeignKey('member.id', onupdate='CASCADE'))
 
+    creator = relationship(
+        'Member',
+        back_populates='events',
+        uselist='False',
+        cascade='all, delete',
+    )
     bot = relationship(
         'Bot',
         back_populates='events',
         uselist=False,
-        cascade="all, delete",
+        cascade='all, delete',
     )
     channel = relationship(
         'Channel',
         back_populates='events',
         uselist=False,
-        cascade="all, delete",
+        cascade='all, delete',
     )
 
     @hybrid_property

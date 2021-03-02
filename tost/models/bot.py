@@ -17,7 +17,6 @@ class Bot(DeclarativeBase):
         back_populates='bots',
         cascade="all, delete",
     )
-
     events = relationship(
         'Event',
         back_populates='bot',

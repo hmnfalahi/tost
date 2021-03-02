@@ -25,6 +25,7 @@ def upgrade():
         sa.Column('description', sa.String),
         sa.Column('bot_id', sa.Integer(), nullable=False),
         sa.Column('channel_id', sa.Integer(), nullable=False),
+        sa.Column('creator_id', sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(
             ['bot_id'],
             ['bot.id'],
@@ -32,6 +33,10 @@ def upgrade():
         sa.ForeignKeyConstraint(
             ['channel_id'],
             ['channel.id'],
+        ),
+        sa.ForeignKeyConstraint(
+            ['creator_id'],
+            ['member.id'],
         ),
     )
 

@@ -16,16 +16,22 @@ class Member(DeclarativeBase):
     email = Column(String, unique=True, nullable=False)
     password = Column(String)
     birth_date = Column(Date, default=date.today())
+
     bots = relationship(
         'Bot',
         back_populates='owner',
-        cascade="all, delete"
+        cascade='all, delete',
     )
     channels = relationship(
         'Channel',
         secondary='channel_admin',
         back_populates='admins',
-        cascade="all, delete",
+        cascade='all, delete',
+    )
+    events = relationship(
+        'Event',
+        back_populates='creator',
+        cascade='all, delete',
     )
 
     members_count = column_property(select([func.count(id)]))
