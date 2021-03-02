@@ -1,10 +1,10 @@
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from restfulpy.orm import DeclarativeBase, Field, OrderingMixin, \
     FilteringMixin, PaginationMixin
 
 
-class Bot(DeclarativeBase):
+class Bot(DeclarativeBase, OrderingMixin, FilteringMixin, PaginationMixin):
     __tablename__ = 'bot'
 
     id = Field(
