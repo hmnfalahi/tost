@@ -33,20 +33,20 @@ def test_event(db):
     # Test Bot Event
     assert event1.id is not None
     assert event1.owner == None
-    assert bot.event == None
+    assert len(bot.events) == 0
 
-    bot.event = event1
-    assert bot.event == event1
+    bot.events.append(event1)
+    assert event1 in bot.events
     assert event1.owner == bot
-    assert event1.id == bot.event.id
+    assert event1.id == bot.events[0].id
 
     # Test channel event
     assert event2.id is not None
-    assert channel.event is None
+    assert len(channel.events) == 0
     assert event2.owner is None
-
-    channel.event = event2
+    #
+    channel.events.append(event2)
     assert event2.owner == channel
-    assert event2.id == channel.event.id
-    assert channel.event == event2
+    assert event2.id == channel.events[0].id
+    assert event2 in channel.events
 
