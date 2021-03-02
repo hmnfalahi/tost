@@ -18,10 +18,9 @@ class Bot(DeclarativeBase):
         cascade="all, delete",
     )
 
-    event = relationship(
+    events = relationship(
         'Event',
         back_populates='bot',
-        uselist=False,
         cascade="all, delete",
     )
 

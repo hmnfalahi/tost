@@ -45,10 +45,9 @@ class Channel(DeclarativeBase):
         cascade="all, delete",
     )
 
-    event = relationship(
+    events = relationship(
         'Event',
         back_populates='channel',
-        uselist=False,
         cascade="all, delete",
     )
 
