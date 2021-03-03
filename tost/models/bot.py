@@ -50,11 +50,11 @@ class Bot(DeclarativeBase, OrderingMixin,
     owner = relationship(
         'Member',
         back_populates='bots',
-        cascade="all, delete",
+        cascade='all, delete',
     )
     events = relationship(
         'Event',
         back_populates='bot',
-        cascade="all, delete",
+        cascade='all, delete',
     )
 

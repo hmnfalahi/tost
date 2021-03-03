@@ -77,11 +77,11 @@ class Channel(DeclarativeBase, OrderingMixin,
         'Member',
         secondary='channel_admin',
         back_populates='channels',
-        cascade="all, delete",
+        cascade='all, delete',
     )
     events = relationship(
         'Event',
         back_populates='channel',
-        cascade="all, delete",
+        cascade='all, delete',
     )
 

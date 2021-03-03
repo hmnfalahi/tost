@@ -114,13 +114,13 @@ class Member(DeclarativeBase, OrderingMixin, FilteringMixin, PaginationMixin):
     bots = relationship(
         'Bot',
         back_populates='owner',
-        cascade="all, delete"
+        cascade='all, delete',
     )
     channels = relationship(
         'Channel',
         secondary='channel_admin',
         back_populates='admins',
-        cascade="all, delete",
+        cascade='all, delete',
     )
 
     members_count = column_property(select([func.count(id)]))
